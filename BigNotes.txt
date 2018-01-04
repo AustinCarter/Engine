@@ -1,0 +1,5 @@
+BIG NOTES:
+-might want to abstract out all the input code from our dispaly class
+	- if we do that, note that the input is still GLFW dependent at the moment
+-currently can only load shaders programs that consist of a vertex and fragment shader, and nothing else (ex. a shader with a geometry shader)
+-want to get fullscreen functionality actually working properly

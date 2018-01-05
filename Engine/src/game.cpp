@@ -8,7 +8,7 @@
 
 int main(int argc, char** argv)
 {
-	Display display(800, 600, "Client App");
+	Display display(800, 600, "Example Client App");
 	while(!display.shouldClose())
 	{
 		display.update();

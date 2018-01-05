@@ -4,6 +4,7 @@
 
 //#define SAMPLES 4;
 
+
 Display::Display(int width, int height, const char* title):
 	m_width(width),
 	m_height(height),
@@ -38,11 +39,15 @@ Display::Display(int width, int height, const char* title):
 	glfwMakeContextCurrent(m_window);
 	glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(m_window, mouse_callback);
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+//	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetScrollCallback(m_window, scroll_callback);
 
 	if(glewInit() != GLEW_OK)
 		std::cout << "ERROR: 	Failed to initialize GLEW" << std::endl;
+
+	glEnable(GL_DEPTH_TEST);
+
+	//glEnable(GL_MULTISAMPLE);
 	
 }
 

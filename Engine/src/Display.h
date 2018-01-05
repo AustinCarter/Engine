@@ -18,6 +18,7 @@ public:
 	float getYScrollOffset();
 
 	void closeDisplay();
+	//NOTE: attempt to implement made it change the resolution of the OS and then the window became unresponsive
 	//void makeFullscreen();
 	//void makeBorderlessFullscreen();
 	bool shouldClose();

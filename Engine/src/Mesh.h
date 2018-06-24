@@ -17,7 +17,7 @@ struct Vertex
 class Mesh
 {
 public:
-	Mesh(cont char *path);
+	Mesh(const char *path);
 	~Mesh();
 
 private:

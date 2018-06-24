@@ -1,7 +1,7 @@
 #include "Display.h"
 
 
-//number of MSAA samples
+//number of MSAA samples | not currently doing anti-aliasing
 //#define SAMPLES 4;
 
 
@@ -74,16 +74,19 @@ void Display::update()
  */
 void Display::processInput()
 {
+	//NOTE: currently polls all 1024 keys on each update cycle, might want to think about ways to reduce the number of polls
 	for(int i = 0; i < 1024; i++)
 	{
 		if(glfwGetKey(m_window, i) == GLFW_PRESS)
-			setKey(i, true);
+		{
+			setKey(i, true);\
+		}
 
-		else if(glfwGetKey(m_window, i) == GLFW_PRESS)
+		else if(m_keys[i] && glfwGetKey(m_window, i) == GLFW_RELEASE)
+		{
 			setKey(i, false);
-	}
-	
-		
+		}
+	}		
 }
 
 /**
@@ -136,11 +139,12 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-//TODO: make this work
-
 
 //TODO: get this working. Documentation:  http://www.glfw.org/docs/latest/window_guide.html
-/*void Display::makeFullscreen()
+/**
+ * makes the display fullscreen
+ */
+void Display::makeFullscreen()
 {
 	if(!m_monitor)
 	{
@@ -153,12 +157,13 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	
 	glfwSetWindowMonitor(m_window, m_monitor, 0, 0, 1920, 1080, GLFW_DONT_CARE);
 }
-
+/**
+ * makes the display borderless fullscreen
+ */
 void Display::makeBorderlessFullscreen()
 {
 	
 }
-*/
 
 //------------------------------------------------
 //getters and setters + wrapper functions

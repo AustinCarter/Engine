@@ -6,8 +6,9 @@
 #include <glm.hpp>
 #include "Rendering/shader.h"
 
-using namespace std;
-
+/**
+ * Struct to store vertex data
+ */
 struct Vertex
 {
 	glm::vec3 position;
@@ -16,8 +17,12 @@ struct Vertex
 	glm::vec3 tangent;
 };
 
-struct Texture {
-	unsigned int id;
+/**
+ * Struct to store texture data
+ */
+struct Texture
+ {
+	unsigned int textID;
 	const char *type;
 	//aiString path;
 };
@@ -25,18 +30,17 @@ struct Texture {
 class Mesh
 {
 public:
-	Mesh(const char *path);
+	Mesh(std::string path);
 	~Mesh();
 	void draw(Shader shader);
+	
 private:
 
 	//meshResource m_resource;
 	unsigned int m_VAO;
 
-	vector<Texture> m_textures;
-	vector<Vertex> m_vertices;
-
-	void loadFromObj(const char *path);
+	std::vector<Texture> m_textures;
+	std::vector<Vertex> m_vertices;
 
 	void init();
 };

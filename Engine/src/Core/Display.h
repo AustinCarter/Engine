@@ -13,8 +13,8 @@ public:
 	~Display();
 	void update();
 
-	void  setKey(int code, bool state);
-	bool  getKey(int code);
+	void   setKey(int code, bool state);
+	bool   getKey(int code);
 	double getXOffset();
 	double getYOffset();
 	double getYScrollOffset();
@@ -37,16 +37,16 @@ public:
 
 private:
 	//window properties
-	int m_width;
-	int m_height;
-	const char *m_title;
-	GLFWwindow* m_window;
+	int 		 m_width;
+	int 		 m_height;
+	const char*  m_title;
+	GLFWwindow*  m_window;
 	GLFWmonitor* m_monitor;
 
 
 	//input data
-	bool   m_keys[1024];
-	bool   m_firstMouse;
+	bool    m_keys[1024];
+	bool    m_firstMouse;
 	double  m_xoffset;
 	double  m_yoffset;
 	double  m_lastX;

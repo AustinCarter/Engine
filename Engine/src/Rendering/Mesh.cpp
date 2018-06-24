@@ -1,8 +1,7 @@
 #include "Mesh.h"
 
-Mesh::Mesh(const char *path)
+Mesh::Mesh(std::string path)
 {
-	loadFromObj(path);
 	init();
 }
 
@@ -11,8 +10,7 @@ void Mesh::init()
 
 }
 
-void Mesh::loadFromObj(const char *path)
+void Mesh::draw(Shader shader)
 {
 
 }
-

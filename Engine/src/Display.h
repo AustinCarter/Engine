@@ -3,6 +3,8 @@
 
 #include <glew.h>
 #include <glfw3.h>
+#include <iostream>
+
 
 class Display
 {

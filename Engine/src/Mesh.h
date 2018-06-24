@@ -12,7 +12,6 @@ struct Vertex
 	glm::vec3 texCoords;
 	glm::vec3 normals;
 	glm::vec3 tangent;
-
 }
 
 class Mesh

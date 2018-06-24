@@ -1,11 +1,16 @@
 #include "Display.h"
 
-#include <iostream>
 
 //number of MSAA samples
 //#define SAMPLES 4;
 
 
+/**
+ * Display constructor class
+ * @param width initial width of the display
+ * @param height initial height of the display
+ * @param title name of the display window
+ */
 Display::Display(int width, int height, const char* title):
 	m_width(width),
 	m_height(height),
@@ -80,13 +85,6 @@ void Display::processInput()
 	
 		
 }
-
-/*
-void Display::processMouseScrolled(double xoff, double yoff)
-{
-	m_scrollYoff = yoff;	
-}*/
-
 
 /**
  * returns the value of the first mouse member variable for the Display
@@ -214,8 +212,6 @@ void Display::setYOff(double yoffset)
 
 void Display::setCallbacks(void (*mouse_callback)(GLFWwindow *, double, double), void (*scroll_callback)(GLFWwindow *, double, double))
 {
-	std::cout << "setting callbacks" << std::endl;
 	glfwSetScrollCallback(m_window, scroll_callback);
 	glfwSetCursorPosCallback(m_window, mouse_callback);
-	//m_shouldClose = true;
 }

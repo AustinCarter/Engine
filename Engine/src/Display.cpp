@@ -1,7 +1,8 @@
-#include <iostream>
-
 #include "Display.h"
 
+#include <iostream>
+
+//number of MSAA samples
 //#define SAMPLES 4;
 
 
@@ -37,10 +38,8 @@ Display::Display(int width, int height, const char* title):
 
 	//Set the window to the current context and add set appropriate callbacks
 	glfwMakeContextCurrent(m_window);
-	glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
-	glfwSetCursorPosCallback(m_window, mouse_callback);
+	glfwSetFramebufferSizeCallback(m_window, &framebuffer_size_callback);
 //	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetScrollCallback(m_window, scroll_callback);
 
 	if(glewInit() != GLEW_OK)
 		std::cout << "ERROR: 	Failed to initialize GLEW" << std::endl;
@@ -65,6 +64,9 @@ void Display::update()
 	glfwPollEvents();
 }
 
+/**
+ * Processes keyboard inputs into the Display
+ */
 void Display::processInput()
 {
 	for(int i = 0; i < 1024; i++)
@@ -79,36 +81,65 @@ void Display::processInput()
 		
 }
 
-
-//TODO: make this work
-void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+/*
+void Display::processMouseScrolled(double xoff, double yoff)
 {
-	/*if(m_firstMouse)
-	{
-		m_lastX = xpos;
-		m_lastY = ypos;
-		m_firstMouse = false;
-	}
+	m_scrollYoff = yoff;	
+}*/
 
-	m_xoffset = xpos - m_lastX;
-	m_yoffset = m_lastY - ypos; // reversed since y-coordinates go from bottom to top
 
-	m_lastX = xpos;
-	m_lastY = ypos;*/
+/**
+ * returns the value of the first mouse member variable for the Display
+ * @return boolean: true if it is the first mouse movement on the Display
+ */
+bool Display::firstMouse()
+{
+	return m_firstMouse;
 }
 
+/**
+ *Sets the coordinates of the last mouse positon for a Display
+ * @param xpos the x position of the mouse
+ * @param ypos the y position of the mouse
+ */
+void Display::setMouse(double xpos, double ypos)
+{
+	m_lastX = xpos;
+	m_lastY = ypos;
+}
+/**
+ * Sets the value of the first mouse member variable of a Display
+ * @param target the target value for the fir1t mouse variable
+ */
+void Display::setFirstMouse(bool target)
+{
+	m_firstMouse = target;
+}
+/**
+ * calculates the distance the mouse has moved in the x and y directions from the last update of the mouse's position
+ * @param xpos the x position of the mouse
+ * @param ypos the y position of the mouse
+ */	
+void Display::calcMouseOff(double xpos, double ypos)
+{
+	m_xoffset = xpos - m_lastX;
+	m_yoffset = m_lastY - ypos; // reversed since y-coordinates go from bottom to top
+}
+
+
+/**
+ * makes sure that the viewport matches the window dimensions after the display size is changed
+ * @param window the window that is being targeted for the viewport size change
+ * @param width  new width
+ * @param height new height
+ */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-	// make sure the viewport matches the new window dimensions; note that width and 
 	glViewport(0, 0, width, height);
 }
 
 //TODO: make this work
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-	//m_scrollYoff = yoffset;	
-	
-}
+
 
 //TODO: get this working. Documentation:  http://www.glfw.org/docs/latest/window_guide.html
 /*void Display::makeFullscreen()
@@ -131,6 +162,9 @@ void Display::makeBorderlessFullscreen()
 }
 */
 
+//------------------------------------------------
+//getters and setters + wrapper functions
+
 void Display::setKey(int code, bool state)
 {
 	m_keys[code] = state;
@@ -141,17 +175,17 @@ bool Display::getKey(int code)
 	return m_keys[code];
 }
 
-float Display::getXOffset()
+double Display::getXOffset()
 {
 	return m_xoffset;
 }
 
-float Display::getYOffset()
+double Display::getYOffset()
 {
 	return m_yoffset;
 }
 
-float Display::getYScrollOffset()
+double Display::getYScrollOffset()
 {
 	return m_scrollYoff;
 }
@@ -170,4 +204,18 @@ void Display::closeDisplay()
 {
 	m_shouldClose = true;
 	glfwSetWindowShouldClose(m_window, true);
+}
+
+void Display::setYOff(double yoffset)
+{
+	m_scrollYoff = yoffset;	
+}
+
+
+void Display::setCallbacks(void (*mouse_callback)(GLFWwindow *, double, double), void (*scroll_callback)(GLFWwindow *, double, double))
+{
+	std::cout << "setting callbacks" << std::endl;
+	glfwSetScrollCallback(m_window, scroll_callback);
+	glfwSetCursorPosCallback(m_window, mouse_callback);
+	//m_shouldClose = true;
 }

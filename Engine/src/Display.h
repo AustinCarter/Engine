@@ -13,15 +13,25 @@ public:
 
 	void  setKey(int code, bool state);
 	bool  getKey(int code);
-	float getXOffset();
-	float getYOffset();
-	float getYScrollOffset();
+	double getXOffset();
+	double getYOffset();
+	double getYScrollOffset();
 
+	bool firstMouse();
+	void setMouse(double xpos, double ypos);
+	void setFirstMouse(bool target);
+	void calcMouseOff(double xpos, double ypos);
+	void setYOff(double yoffset);
+
+	void setCallbacks(void (*mouse_callback)(GLFWwindow *, double, double), void (*scroll_callback)(GLFWwindow *, double, double));
 	void closeDisplay();
 	//NOTE: attempt to implement made it change the resolution of the OS and then the window became unresponsive
 	//void makeFullscreen();
 	//void makeBorderlessFullscreen();
 	bool shouldClose();
+
+	/*void processMouseScrolled(double xpos, double ypos);
+	void processMouseMoved(double xoff, double yoff);*/
 
 private:
 	//window properties
@@ -35,20 +45,23 @@ private:
 	//input data
 	bool   m_keys[1024];
 	bool   m_firstMouse;
-	float  m_xoffset;
-	float  m_yoffset;
-	float  m_lastX;
-	float  m_lastY;
-	float  m_scrollYoff;
+	double  m_xoffset;
+	double  m_yoffset;
+	double  m_lastX;
+	double  m_lastY;
+	double  m_scrollYoff;
 
 	bool m_shouldClose;
 	
-	void processInput(); //NOTE: might want to abstract out the input handling eventually
+	void processInput(); //NOTE: might want to abstract out the input handling eventually		
+
+	
 };
 
 //callback function prototypes
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
 
 #endif

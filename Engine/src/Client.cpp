@@ -1,5 +1,4 @@
-#include "Display.h"
-
+#include "Core/Display.h"
 /**
  * This is an example of a client program that is used to test the 
  * usability of the engine for an actual user of the engine
@@ -8,7 +7,7 @@
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
-Display display(800, 600, "Example Client App");
+Display display(800, 600, "Client App");
 
 int main(int argc, char** argv)
 {

@@ -56,7 +56,6 @@ private:
 	bool m_shouldClose;
 	
 	void processInput(); //NOTE: might want to abstract out the input handling eventually		
-
 	
 };
 

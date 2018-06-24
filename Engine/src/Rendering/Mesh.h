@@ -4,7 +4,9 @@
 #include <vector>
 
 #include <glm.hpp>
+#include "Rendering/shader.h"
 
+using namespace std;
 
 struct Vertex
 {
@@ -12,23 +14,31 @@ struct Vertex
 	glm::vec3 texCoords;
 	glm::vec3 normals;
 	glm::vec3 tangent;
-}
+};
+
+struct Texture {
+	unsigned int id;
+	const char *type;
+	//aiString path;
+};
 
 class Mesh
 {
 public:
 	Mesh(const char *path);
 	~Mesh();
-
+	void draw(Shader shader);
 private:
 
-	meshResource m_resource;
+	//meshResource m_resource;
 	unsigned int m_VAO;
 
-	Vector<Texture> m_textures;
-	Vector<Vertex> m_verticies;
+	vector<Texture> m_textures;
+	vector<Vertex> m_vertices;
 
 	void loadFromObj(const char *path);
+
+	void init();
 };
 
 #endif

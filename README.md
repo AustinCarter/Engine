@@ -1,2 +1,2 @@
 # Engine
-My first attempt at creating a game engine
+My first attempt at creating a rendering engine

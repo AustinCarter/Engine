@@ -1,4 +1,4 @@
-#include "Shader.h"
+#include "Rendering/Shader.h"
 
 Shader::Shader(const char* vertex, const char* frag)
 {
@@ -85,7 +85,7 @@ void Shader::checkCompileErrors(unsigned int shader, std::string type)
 		if (!success)
 		{
 			glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-			std::cout << "PROGRAM COMPILATION ERROR:		" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+			std::cout << "PROGRAM COMPILATION ERROR:		" << infoLog << "\n ------------------------------------------------------- " << std::endl;
 		}
 	}
 	else
@@ -94,7 +94,7 @@ void Shader::checkCompileErrors(unsigned int shader, std::string type)
 		if (!success)
 		{
 			glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-			std::cout << "SHDAER COMPILATION ERROR:		" <<  type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+			std::cout << "SHDAER COMPILATION ERROR:		" <<  type << "\n" << infoLog << "\n ------------------------------------------------------- " << std::endl;
 		}
 	}
 }

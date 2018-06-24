@@ -1,4 +1,4 @@
-#include "Display.h"
+#include "Core/Display.h"
 
 
 //number of MSAA samples | not currently doing anti-aliasing
@@ -44,7 +44,7 @@ Display::Display(int width, int height, const char* title):
 	//Set the window to the current context and add set appropriate callbacks
 	glfwMakeContextCurrent(m_window);
 	glfwSetFramebufferSizeCallback(m_window, &framebuffer_size_callback);
-//	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	if(glewInit() != GLEW_OK)
 		std::cout << "ERROR: 	Failed to initialize GLEW" << std::endl;
@@ -200,7 +200,7 @@ Display::~Display()
 
 bool Display::shouldClose()
 {
-	return m_shouldClose; //should we just make this a call to the GL function?
+	return m_shouldClose;
 }
 
 void Display::closeDisplay()
@@ -213,7 +213,6 @@ void Display::setYOff(double yoffset)
 {
 	m_scrollYoff = yoffset;	
 }
-
 
 void Display::setCallbacks(void (*mouse_callback)(GLFWwindow *, double, double), void (*scroll_callback)(GLFWwindow *, double, double))
 {

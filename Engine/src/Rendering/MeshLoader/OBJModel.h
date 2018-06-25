@@ -26,6 +26,11 @@ class OBJModel
 		std::vector<glm::vec2> m_texCoords;
 		std::vector<glm::vec3> m_normals;
 		std::vector<OBJIndex> m_indicies;
+
+		bool m_hasNorm;
+		bool m_hasText;
+
+		OBJIndex parseIndex(std::string index);
 };
 
 #endif

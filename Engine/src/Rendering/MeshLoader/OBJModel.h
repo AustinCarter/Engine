@@ -2,7 +2,9 @@
 #define OBJMODEL_H
 
 #include <vector>
-#include<glm.hpp>
+#include <glm.hpp>
+
+#include "IndexedModel.h"
 
 struct OBJIndex
 {
@@ -16,10 +18,11 @@ class OBJModel
 {
 	public:
 		OBJModel(std::string filename);
-		vector<glm::vec3> getPositions();
-		vector<glm::vec2> getTexCoords();
-		vector<glm::vec3> getNormals();
-		vector<OBJIndex> getIndicies();
+		std::vector<glm::vec3> getPositions();
+		std::vector<glm::vec2> getTexCoords();
+		std::vector<glm::vec3> getNormals();
+		std::vector<OBJIndex> getIndicies();
+		IndexedModel toIndexedModel();
 
 	private:
 		std::vector<glm::vec3> m_positions;

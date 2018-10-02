@@ -2,8 +2,13 @@
 #define MESH_H
 
 #include <vector>
+#include <string>
 
 #include <glm.hpp>
+
+#include "MeshLoader/OBJModel.h"
+#include "MeshLoader/IndexedModel.h"
+
 #include "Rendering/shader.h"
 
 /**
@@ -12,9 +17,14 @@
 struct Vertex
 {
 	glm::vec3 position;
-	glm::vec3 texCoords;
+	glm::vec2 texCoords;
 	glm::vec3 normals;
 	glm::vec3 tangent;
+	Vertex(glm::vec3 positions, glm::vec2 texCoord, glm::vec3 normal):
+	position(positions),
+	texCoords(texCoord),
+	normals(normal)
+	{}
 };
 
 /**
@@ -42,7 +52,7 @@ private:
 	std::vector<Texture> m_textures;
 	std::vector<Vertex> m_vertices;
 
-	void init();
+	void loadMesh(std::string filename);
 };
 
 #endif

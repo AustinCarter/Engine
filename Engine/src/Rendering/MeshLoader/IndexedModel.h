@@ -2,16 +2,16 @@
 #define INDEXED_H
 
 #include <vector>
-#include<glm.hpp>
+#include <glm.hpp>
 
 class IndexedModel
 {
 	public:
 		IndexedModel();
-		vector<glm::vec3> getPositions();
-		vector<glm::vec2> getTexCoords();
-		vector<glm::vec3> getNormals();
-		vector<int> getIndicies();
+		std::vector<glm::vec3> getPositions();
+		std::vector<glm::vec2> getTexCoords();
+		std::vector<glm::vec3> getNormals();
+		std::vector<int> getIndicies();
 
 	private:
 		std::vector<glm::vec3> m_positions;

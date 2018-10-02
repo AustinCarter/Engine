@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
+#include <string>
+
 /**
  * [description of method]
  * @param filename [description]
@@ -14,7 +16,7 @@ OBJModel::OBJModel(std::String filename)
 	std::vector<std::string> splitFile = split(filename, '.');
 	if(splitFile.back().compare(".obj"))
 	{
-		printf("ERROR:	at %s line %d; expected obj recieved %s",__FILE__, __LINE__, splitFile.back());
+		printf("ERROR:	at %s line %d; expected .obj recieved %s",__FILE__, __LINE__, splitFile.back());
 
 	}
 	else
@@ -43,6 +45,7 @@ OBJModel::OBJModel(std::String filename)
 			}
 			else if(!tokens.front().compare("f"))
 			{
+				//triangulation of faces
 				for(int i = 0; i < tokens.size() - 3; i++)
 				{
 					m_indicies.push_back(parseIndex(tokens[1]));
@@ -56,6 +59,35 @@ OBJModel::OBJModel(std::String filename)
 		objStream.close();
 	}
 
+}
+
+IndexedModel OBJModel::toIndexedModel()
+{
+	IndexedModel result;
+
+	for(int i = 0; i < m_indicies.size(); i++)
+	{
+		OBJIndex currentIndex = m_indicies[i];
+		glm::vec3 currentPosition = m_positions[currentIndex.vertexIndex];
+		glm::vec3 currentTexCoord;
+		glm::vec3 currentNormal;
+
+		if(m_hasText)
+			 currentTexCoord = m_texCoords[currentIndex.texCoordIndex];
+		else
+			currentTexCoord = glm::vec2(0,0);
+		if(m_hasNorm)
+			 currentNormal = m_normals[currentIndex.normalIndex];
+		else
+			currentTexCoord = glm::vec3(0,0,0);		
+
+		result.getPositions().push_back(currentPosition);
+		result.getNormals().push_back(currentNormal);
+		result.getTexCoords().push_back(currentTexCoord);
+		result.getIndicies().push_back(i);
+	}
+
+	return result;
 }
 
 OBJIndex OBJModel::parseIndex(std::string index)
@@ -79,7 +111,7 @@ OBJIndex OBJModel::parseIndex(std::string index)
 	return result;
 }
 
-//Getters and setters
+//------ Getters and setters ------
 vector<glm::vec3> OBJModel::getPositions(){return m_positions;}
 vector<glm::vec2> OBJModel::getTexCoords(){return m_texCoords;}
 vector<glm::vec3> OBJModel::getNormals(){return m_normals;}

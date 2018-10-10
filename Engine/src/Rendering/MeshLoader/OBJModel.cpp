@@ -32,25 +32,25 @@ OBJModel::OBJModel(std::string filename)
 			tokens = split(line, ' ');
 			if(!tokens.front().compare("v"))
 			{
-				m_positions.push_back(glm::vec3(stof(tokens[1]),stof(tokens[2]),stof(tokens[3])));
+				m_positions.emplace_back(glm::vec3(stof(tokens[1]),stof(tokens[2]),stof(tokens[3])));
 			}
 			else if(!tokens.front().compare("vt"))
 			{
-				m_texCoords.push_back(glm::vec2(stof(tokens[1]),stof(tokens[2])));
+				m_texCoords.emplace_back(glm::vec2(stof(tokens[1]),stof(tokens[2])));
 
 			}
 			else if(!tokens.front().compare("vn"))
 			{
-				m_normals.push_back(glm::vec3(stof(tokens[1]),stof(tokens[2]),stof(tokens[3])));
+				m_normals.emplace_back(glm::vec3(stof(tokens[1]),stof(tokens[2]),stof(tokens[3])));
 			}
 			else if(!tokens.front().compare("f"))
 			{
 				//triangulation of faces
 				for(int i = 0; i < tokens.size() - 3; i++)
 				{
-					m_indicies.push_back(parseIndex(tokens[1]));
-					m_indicies.push_back(parseIndex(tokens[2 + i]));
-					m_indicies.push_back(parseIndex(tokens[3 + i]));
+					m_indicies.emplace_back(parseIndex(tokens[1]));
+					m_indicies.emplace_back(parseIndex(tokens[2 + i]));
+					m_indicies.emplace_back(parseIndex(tokens[3 + i]));
 				}
 			}
 
@@ -67,6 +67,8 @@ OBJModel::OBJModel(std::string filename)
  */
 IndexedModel* OBJModel::toIndexedModel()
 {
+
+	//NOTE: want to change to using smart pointers
 	IndexedModel *result = new IndexedModel();
 
 	for(int i = 0; i < m_indicies.size(); i++)

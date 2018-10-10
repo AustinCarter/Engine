@@ -7,10 +7,10 @@
 #include <string>
 
 /**
- * [description of method]
- * @param filename [description]
+ * Construct a model based off of data from an OBJ file at path filename
+ * @param filename path of the obj file to be read from
  */
-OBJModel::OBJModel(std::String filename)
+OBJModel::OBJModel(std::string filename)
 {
 	//check that the file being loaded in is an obj file
 	std::vector<std::string> splitFile = split(filename, '.');
@@ -29,19 +29,19 @@ OBJModel::OBJModel(std::String filename)
 		while(std::getline(objStream, line))
 		{
 			std::cout << line << std::endl;
-			tokens = split(line, ' ')
+			tokens = split(line, ' ');
 			if(!tokens.front().compare("v"))
 			{
-				m_positions.push_back(glm::vec3(atof(tokens[1]),atof(tokens[2]),atof(tokens[3])));
+				m_positions.push_back(glm::vec3(stof(tokens[1]),stof(tokens[2]),stof(tokens[3])));
 			}
 			else if(!tokens.front().compare("vt"))
 			{
-				m_texCoords.push_back(glm::vec2(atof(tokens[1]),atof(tokens[2])));
+				m_texCoords.push_back(glm::vec2(stof(tokens[1]),stof(tokens[2])));
 
 			}
 			else if(!tokens.front().compare("vn"))
 			{
-				m_normals.push_back(glm::vec3(atof(tokens[1]),atof(tokens[2]),atof(tokens[3])));
+				m_normals.push_back(glm::vec3(stof(tokens[1]),stof(tokens[2]),stof(tokens[3])));
 			}
 			else if(!tokens.front().compare("f"))
 			{
@@ -61,15 +61,19 @@ OBJModel::OBJModel(std::String filename)
 
 }
 
-IndexedModel OBJModel::toIndexedModel()
+/**
+ * Converts from raw OBJ model data into the internal indexed model
+ * @return an indexed model representation of the data stored in the OBJ model
+ */
+IndexedModel* OBJModel::toIndexedModel()
 {
-	IndexedModel result;
+	IndexedModel *result = new IndexedModel();
 
 	for(int i = 0; i < m_indicies.size(); i++)
 	{
 		OBJIndex currentIndex = m_indicies[i];
 		glm::vec3 currentPosition = m_positions[currentIndex.vertexIndex];
-		glm::vec3 currentTexCoord;
+		glm::vec2 currentTexCoord;
 		glm::vec3 currentNormal;
 
 		if(m_hasText)
@@ -81,10 +85,10 @@ IndexedModel OBJModel::toIndexedModel()
 		else
 			currentTexCoord = glm::vec3(0,0,0);		
 
-		result.getPositions().push_back(currentPosition);
-		result.getNormals().push_back(currentNormal);
-		result.getTexCoords().push_back(currentTexCoord);
-		result.getIndicies().push_back(i);
+		result -> addPosition(currentPosition);
+		result -> addNormal(currentNormal);
+		result -> addTexCoord(currentTexCoord);
+		result -> addIndex(i);
 	}
 
 	return result;
@@ -92,19 +96,19 @@ IndexedModel OBJModel::toIndexedModel()
 
 OBJIndex OBJModel::parseIndex(std::string index)
 {
-	std::vector<std::string> tokens = split(index, "/");
+	std::vector<std::string> tokens = split(index, '/');
 
 	OBJIndex result;
-	result.vertexIndex = atoi(tokens[0]);
+	result.vertexIndex = stoi(tokens[0]);
 
 	if(tokens.size() > 1)
 	{
 		m_hasText = true;
-		result.texCoordIndex = atoi(tokens[1]);
+		result.texCoordIndex = stoi(tokens[1]);
 		if(tokens.size() > 2)
 		{
 			m_hasNorm = true;
-			result.normalIndex = atoi(tokens[2]);
+			result.normalIndex = stoi(tokens[2]);
 		}
 	}
 
@@ -112,7 +116,7 @@ OBJIndex OBJModel::parseIndex(std::string index)
 }
 
 //------ Getters and setters ------
-vector<glm::vec3> OBJModel::getPositions(){return m_positions;}
-vector<glm::vec2> OBJModel::getTexCoords(){return m_texCoords;}
-vector<glm::vec3> OBJModel::getNormals(){return m_normals;}
-vector<OBJIndex> OBJModel::getIndicies(){return m_indicies;}
+std::vector<glm::vec3> OBJModel::getPositions(){return m_positions;}
+std::vector<glm::vec2> OBJModel::getTexCoords(){return m_texCoords;}
+std::vector<glm::vec3> OBJModel::getNormals(){return m_normals;}
+std::vector<OBJIndex> OBJModel::getIndicies(){return m_indicies;}

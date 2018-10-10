@@ -22,7 +22,7 @@ class OBJModel
 		std::vector<glm::vec2> getTexCoords();
 		std::vector<glm::vec3> getNormals();
 		std::vector<OBJIndex> getIndicies();
-		IndexedModel toIndexedModel();
+		IndexedModel* toIndexedModel();
 
 	private:
 		std::vector<glm::vec3> m_positions;

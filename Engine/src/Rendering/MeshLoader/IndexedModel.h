@@ -4,6 +4,10 @@
 #include <vector>
 #include <glm.hpp>
 
+/*
+An internal data model to parse all loaded models to
+ */
+
 class IndexedModel
 {
 	public:
@@ -12,6 +16,10 @@ class IndexedModel
 		std::vector<glm::vec2> getTexCoords();
 		std::vector<glm::vec3> getNormals();
 		std::vector<int> getIndicies();
+		void addPosition(glm::vec3); 
+		void addTexCoord(glm::vec2); 
+		void addNormal(glm::vec3); 
+		void addIndex(int); 
 
 	private:
 		std::vector<glm::vec3> m_positions;
